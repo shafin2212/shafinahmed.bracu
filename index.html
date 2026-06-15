@@ -3,246 +3,1085 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shafin Ahmed | Portfolio</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
-
+<title>Shafin Ahmed — EEE Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-html { scroll-behavior: smooth; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: #020617;
-    color: white;
-}
+  :root {
+    --navy:   #050B18;
+    --navy2:  #0B1628;
+    --navy3:  #112240;
+    --teal:   #00D4C8;
+    --teal2:  #00A99D;
+    --amber:  #F59E0B;
+    --slate:  #8892A4;
+    --light:  #CDD6F4;
+    --white:  #E8EEF7;
+    --card:   rgba(17, 34, 64, 0.7);
+    --border: rgba(0, 212, 200, 0.15);
+  }
 
-/* NAV */
-nav {
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--navy2); }
+  ::-webkit-scrollbar-thumb { background: var(--teal2); border-radius: 4px; }
+
+  /* ── NAV ── */
+  nav {
     position: fixed;
-    width: 100%;
-    background: rgba(0,0,0,0.7);
+    top: 0; left: 0; right: 0;
+    z-index: 999;
     display: flex;
     justify-content: space-between;
-    padding: 15px 40px;
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-}
-
-nav a {
-    color: white;
-    margin: 0 10px;
-    text-decoration: none;
-}
-
-/* HEADER */
-header {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg,#06b6d4,#10b981);
-    text-align: center;
-}
+    padding: 18px 6%;
+    background: rgba(5, 11, 24, 0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    transition: padding 0.3s;
+  }
 
-header h1 {
-    font-family: 'Orbitron';
-    font-size: 50px;
-}
-
-.btn {
-    padding: 10px 20px;
-    border-radius: 20px;
-    background: black;
-    margin: 10px;
-    color: white;
+  .nav-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--teal);
+    letter-spacing: 0.5px;
     text-decoration: none;
-}
+  }
+  .nav-logo span { color: var(--white); }
 
-/* SECTIONS */
-.section {
-    padding: 80px 10%;
-}
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--slate);
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: color 0.25s;
+    position: relative;
+  }
+  .nav-links a::before {
+    content: attr(data-num);
+    color: var(--teal);
+    font-size: 0.7rem;
+    margin-right: 4px;
+  }
+  .nav-links a:hover { color: var(--teal); }
 
-.card {
-    background: rgba(255,255,255,0.05);
-    padding: 20px;
-    margin: 15px 0;
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 8%;
+    overflow: hidden;
+  }
+
+  /* Circuit SVG background */
+  .circuit-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.13;
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 720px; }
+
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--teal);
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s forwards;
+  }
+  .hero-name .accent { color: var(--teal); }
+
+  .hero-tagline {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--slate);
+    margin: 24px 0 40px;
+    max-width: 560px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s forwards;
+  }
+
+  .hero-cta {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px;
+    background: var(--teal);
+    color: var(--navy);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.25s, transform 0.2s;
+  }
+  .btn-primary:hover { background: #00f0e2; transform: translateY(-2px); }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px;
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.25s, transform 0.2s;
+  }
+  .btn-outline:hover { background: rgba(0,212,200,0.1); transform: translateY(-2px); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: var(--slate); font-size: 0.7rem; letter-spacing: 2px;
+    opacity: 0;
+    animation: fadeUp 1s 1.2s forwards;
+  }
+  .scroll-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--teal), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 100px 8%; }
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 60px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--teal);
+    font-size: 0.85rem;
+  }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--white);
+  }
+  .section-line {
+    flex: 1; height: 1px;
+    background: var(--border);
+    max-width: 260px;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--navy2); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .about-text p {
+    color: var(--slate);
+    margin-bottom: 20px;
+    font-size: 1.05rem;
+  }
+  .about-text p strong { color: var(--white); }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .stat-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px 20px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--teal);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--slate);
+    letter-spacing: 0.5px;
+  }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--navy); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  .skill-category {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .skill-category:hover {
+    border-color: var(--teal2);
+    transform: translateY(-4px);
+  }
+  .skill-cat-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--teal);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .skill-cat-title svg { opacity: 0.8; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    padding: 5px 12px;
+    background: rgba(0, 212, 200, 0.08);
+    border: 1px solid rgba(0, 212, 200, 0.2);
+    color: var(--light);
+    border-radius: 20px;
+  }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--navy2); }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 28px;
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 12px;
-    transition: 0.3s;
-}
+    padding: 32px 28px;
+    display: flex; flex-direction: column;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .project-card:hover { border-color: rgba(0,212,200,0.4); transform: translateY(-6px); }
+  .project-card:hover::before { opacity: 1; }
 
-.card:hover {
-    transform: translateY(-5px);
-}
+  .project-award {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--amber);
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .project-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .project-desc {
+    color: var(--slate);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    flex: 1;
+    margin-bottom: 24px;
+  }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .project-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--teal);
+    padding: 3px 10px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+  }
+  .project-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 20px;
+    font-size: 0.82rem;
+    color: var(--teal);
+    text-decoration: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    transition: gap 0.2s;
+  }
+  .project-link:hover { gap: 10px; }
 
-/* GRID */
-.grid {
+  /* ── EXPERIENCE / TRAINING ── */
+  #experience { background: var(--navy); }
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--teal), transparent);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 48px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -36px; top: 8px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 10px var(--teal);
+  }
+  .timeline-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--teal);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .timeline-role {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .timeline-org {
+    font-size: 0.88rem;
+    color: var(--amber);
+    margin-bottom: 12px;
+  }
+  .timeline-bullets { list-style: none; }
+  .timeline-bullets li {
+    font-size: 0.9rem;
+    color: var(--slate);
+    padding: 4px 0 4px 20px;
+    position: relative;
+  }
+  .timeline-bullets li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 0.75rem;
+    top: 6px;
+  }
+
+  /* ── EDUCATION ── */
+  #education { background: var(--navy2); }
+  .edu-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-    gap: 20px;
-}
-
-.skills span {
-    background: #10b981;
-    padding: 8px 12px;
-    border-radius: 20px;
-    margin: 5px;
+    gap: 24px;
+  }
+  .edu-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .edu-card:hover { border-color: rgba(0,212,200,0.4); transform: translateY(-4px); }
+  .edu-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--teal);
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .edu-degree {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .edu-school {
+    font-size: 0.88rem;
+    color: var(--slate);
+    margin-bottom: 12px;
+  }
+  .edu-grade {
     display: inline-block;
-}
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--amber);
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    padding: 4px 12px;
+    border-radius: 3px;
+  }
 
-footer {
+  /* ── AWARDS ── */
+  #awards { background: var(--navy); }
+  .awards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+    gap: 24px;
+  }
+  .award-card {
+    background: var(--card);
+    border: 1px solid rgba(245,158,11,0.2);
+    border-radius: 10px;
+    padding: 28px;
+    display: flex; gap: 18px; align-items: flex-start;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .award-card:hover { border-color: rgba(245,158,11,0.5); transform: translateY(-4px); }
+  .award-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .award-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .award-detail {
+    font-size: 0.85rem;
+    color: var(--slate);
+  }
+
+  /* ── INTERESTS ── */
+  #interests { background: var(--navy2); }
+  .interests-wrap { display: flex; flex-wrap: wrap; gap: 12px; }
+  .interest-chip {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    font-size: 0.88rem;
+    color: var(--light);
+    transition: border-color 0.25s, color 0.25s;
+  }
+  .interest-chip:hover { border-color: var(--teal2); color: var(--teal); }
+  .interest-chip svg { color: var(--teal); flex-shrink: 0; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--navy); text-align: center; }
+  .contact-headline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .contact-sub {
+    color: var(--slate);
+    font-size: 1rem;
+    max-width: 480px;
+    margin: 0 auto 40px;
+  }
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+  .contact-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    transition: border-color 0.25s, color 0.25s, transform 0.2s;
+  }
+  .contact-link:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+    transform: translateY(-3px);
+  }
+  .contact-link svg { color: var(--teal); }
+
+  /* ── FOOTER ── */
+  footer {
     text-align: center;
-    padding: 20px;
-    background: black;
-}
+    padding: 32px;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--slate);
+    background: var(--navy);
+  }
+  footer span { color: var(--teal); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.3; }
+  }
+  @keyframes dash {
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 5%; }
+    .nav-links { display: none; }
+    section { padding: 80px 5%; }
+    .about-grid { grid-template-columns: 1fr; }
+    .hero-name { font-size: 2.5rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
 </style>
 </head>
-
 <body>
 
+<!-- NAV -->
 <nav>
-    <div>Shafin</div>
-    <div>
-        <a href="#about">About</a>
-        <a href="#education">Education</a>
-        <a href="#projects">Projects</a>
-        <a href="#experience">Experience</a>
-        <a href="#training">Training</a>
-        <a href="#skills">Skills</a>
-        <a href="#awards">Awards</a>
-        <a href="#contact">Contact</a>
-    </div>
+  <a href="#hero" class="nav-logo">SA<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about"      data-num="01">About</a></li>
+    <li><a href="#skills"     data-num="02">Skills</a></li>
+    <li><a href="#projects"   data-num="03">Projects</a></li>
+    <li><a href="#experience" data-num="04">Training</a></li>
+    <li><a href="#education"  data-num="05">Education</a></li>
+    <li><a href="#awards"     data-num="06">Awards</a></li>
+    <li><a href="#contact"    data-num="07">Contact</a></li>
+  </ul>
 </nav>
 
-<header>
-    <h1>Shafin Ahmed</h1>
-    <p>EEE | IoT | Embedded Systems | VLSI | Power Systems</p>
+<!-- HERO -->
+<section id="hero">
 
-    <a href="YOUR_GITHUB_LINK" class="btn">GitHub</a>
-    <a href="YOUR_LINKEDIN_LINK" class="btn">LinkedIn</a>
-    <a href="CV.pdf" class="btn">Download CV</a>
-</header>
+  <!-- Circuit board trace SVG background -->
+  <svg class="circuit-bg" viewBox="0 0 1400 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <style>
+        .trace { fill: none; stroke: #00D4C8; stroke-width: 1.5; stroke-dasharray: 1000; stroke-dashoffset: 1000; }
+        .t1 { animation: dash 4s 0.5s linear forwards; }
+        .t2 { animation: dash 5s 1s linear forwards; }
+        .t3 { animation: dash 6s 1.5s linear forwards; }
+        .t4 { animation: dash 4s 2s linear forwards; }
+        .t5 { animation: dash 5s 0.8s linear forwards; }
+        .t6 { animation: dash 7s 1.2s linear forwards; }
+        .node { fill: #00D4C8; animation: fadeIn 1s 3s both; }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+      </style>
+    </defs>
+    <!-- Horizontal traces -->
+    <path class="trace t1" d="M0 200 H300 V150 H600 V200 H900"/>
+    <path class="trace t2" d="M200 400 H500 V350 H800 V400 H1100 V450 H1400"/>
+    <path class="trace t3" d="M100 650 H400 V600 H650 V700 H950 V650 H1200"/>
+    <path class="trace t4" d="M0 750 H250 V800 H550 V750 H800"/>
+    <path class="trace t5" d="M900 100 H1100 V200 H1300 V100"/>
+    <path class="trace t6" d="M700 500 V300 H850 V500 H1000 V600 H1200 V500"/>
+    <!-- Vertical connectors -->
+    <path class="trace t1" d="M300 200 V400"/>
+    <path class="trace t2" d="M600 200 V350"/>
+    <path class="trace t3" d="M900 400 V650"/>
+    <path class="trace t4" d="M400 600 V400"/>
+    <path class="trace t5" d="M1100 200 V450"/>
+    <!-- Nodes (solder pads) -->
+    <circle class="node" cx="300"  cy="200" r="5"/>
+    <circle class="node" cx="600"  cy="200" r="5"/>
+    <circle class="node" cx="900"  cy="400" r="5"/>
+    <circle class="node" cx="500"  cy="400" r="5"/>
+    <circle class="node" cx="400"  cy="600" r="5"/>
+    <circle class="node" cx="650"  cy="600" r="5"/>
+    <circle class="node" cx="1100" cy="200" r="5"/>
+    <circle class="node" cx="800"  cy="400" r="5"/>
+    <circle class="node" cx="250"  cy="750" r="5"/>
+    <circle class="node" cx="550"  cy="750" r="5"/>
+    <circle class="node" cx="1300" cy="100" r="5"/>
+    <!-- IC chip outline -->
+    <rect class="trace t3" x="680" y="280" width="140" height="140" rx="4"/>
+    <line class="trace t5" x1="680" y1="310" x2="660" y2="310"/>
+    <line class="trace t5" x1="680" y1="340" x2="660" y2="340"/>
+    <line class="trace t5" x1="680" y1="370" x2="660" y2="370"/>
+    <line class="trace t5" x1="820" y1="310" x2="840" y2="310"/>
+    <line class="trace t5" x1="820" y1="340" x2="840" y2="340"/>
+    <line class="trace t5" x1="820" y1="370" x2="840" y2="370"/>
+    <line class="trace t5" x1="710" y1="280" x2="710" y2="260"/>
+    <line class="trace t5" x1="750" y1="280" x2="750" y2="260"/>
+    <line class="trace t5" x1="710" y1="420" x2="710" y2="440"/>
+    <line class="trace t5" x1="750" y1="420" x2="750" y2="440"/>
+  </svg>
 
-<section id="about" class="section">
-<h2>About Me</h2>
-<p>
-Electrical and Electronics Engineering graduate with strong interests in IoT, embedded systems, VLSI, and power systems. Experienced in real-time systems, robotics, and AI-based solutions.
-</p>
+  <div class="hero-content">
+    <p class="hero-eyebrow">// EEE Engineer · BRAC University 2026</p>
+    <h1 class="hero-name">Shafin<br><span class="accent">Ahmed</span></h1>
+    <p class="hero-tagline">Designing the intersection of power systems, intelligent hardware, and real-world robotics — from PCB traces to machine learning pipelines.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        View Projects
+      </a>
+      <a href="https://github.com/shafin2212" target="_blank" class="btn-outline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+      <a href="https://linkedin.com/in/shafinahmed-bracu" target="_blank" class="btn-outline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
 </section>
 
-<section id="education" class="section">
-<h2>Education</h2>
-
-<div class="card">
-<b>BRAC University</b><br>
-B.Sc. in Electrical & Electronic Engineering (2022–2026)<br>
-CGPA: 3.53 / 4.00
-</div>
-
-<div class="card">
-<b>Engineering University School & College</b><br>
-HSC (2020) — GPA: 5.00
-</div>
-
-<div class="card">
-<b>Sonargaon GR Institution</b><br>
-SSC (2018) — GPA: 5.00
-</div>
-
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">About Me</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm an <strong>Electrical & Electronic Engineering graduate</strong> from BRAC University (CGPA 3.53/4.00) with a strong foundation in power systems, IoT, robotics, and semiconductor design.</p>
+      <p>My experience spans from hands-on training at the <strong>Ghorashal Combined Cycle Power Plant</strong> — working with SCADA/DCS, switchgear and protection relays — to analog IC design at <strong>Neural Semiconductor</strong> using industry-standard Cadence EDA tools.</p>
+      <p>I enjoy building systems that bridge the physical and digital worlds: from <strong>custom PCBs designed in Altium</strong> to real-time computer vision pipelines running on edge hardware like Raspberry Pi 5.</p>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-box">
+        <span class="stat-num">3.53</span>
+        <span class="stat-label">CGPA / 4.00</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">3+</span>
+        <span class="stat-label">Major Projects</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">2</span>
+        <span class="stat-label">Industrial Trainings</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">৳30K</span>
+        <span class="stat-label">Pre-Seed Grant Won</span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="projects" class="section">
-<h2>Projects</h2>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid">
 
-<div class="grid">
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Programming
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">C</span>
+        <span class="skill-tag">MATLAB</span>
+        <span class="skill-tag">Verilog</span>
+        <span class="skill-tag">SystemVerilog</span>
+      </div>
+    </div>
 
-<div class="card">
-<h3>Robotic Arm with Soft Gripper</h3>
-<p>4-DOF manipulator with AI-based object detection using OpenCV and Raspberry Pi.</p>
-</div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        EDA & Design Tools
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Altium Designer</span>
+        <span class="skill-tag">Cadence Virtuoso</span>
+        <span class="skill-tag">PSpice</span>
+        <span class="skill-tag">Proteus</span>
+        <span class="skill-tag">EasyEDA</span>
+        <span class="skill-tag">Fusion 360</span>
+      </div>
+    </div>
 
-<div class="card">
-<h3>IoT Health Monitoring System</h3>
-<p>ESP32-based system with ML-based diabetic prediction and real-time monitoring.</p>
-</div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+        Simulation & Analysis
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">MATLAB/Simulink</span>
+        <span class="skill-tag">AutoCAD Electrical</span>
+        <span class="skill-tag">OpenCV</span>
+        <span class="skill-tag">PyQt5</span>
+      </div>
+    </div>
 
-<div class="card">
-<h3>YOLO Object Detection System</h3>
-<p>Real-time object detection using YOLOv5 & YOLOv8 with GUI integration.</p>
-</div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+        Technical Domains
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Power Systems</span>
+        <span class="skill-tag">Smart Grid</span>
+        <span class="skill-tag">IoT</span>
+        <span class="skill-tag">Embedded Systems</span>
+        <span class="skill-tag">Robotics</span>
+        <span class="skill-tag">Computer Vision</span>
+        <span class="skill-tag">RFIC</span>
+        <span class="skill-tag">PCB Design</span>
+        <span class="skill-tag">Machine Learning</span>
+      </div>
+    </div>
 
-</div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Soft Skills
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Analytical Thinking</span>
+        <span class="skill-tag">Technical Writing</span>
+        <span class="skill-tag">Team Collaboration</span>
+        <span class="skill-tag">Problem Solving</span>
+        <span class="skill-tag">Adaptability</span>
+      </div>
+    </div>
 
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+        Platforms & Software
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">VS Code</span>
+        <span class="skill-tag">Raspberry Pi</span>
+        <span class="skill-tag">ESP32</span>
+        <span class="skill-tag">SCADA / DCS</span>
+        <span class="skill-tag">Google Workspace</span>
+        <span class="skill-tag">Microsoft 365</span>
+      </div>
+    </div>
+
+  </div>
 </section>
 
-<section id="experience" class="section">
-<h2>Experience</h2>
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Projects</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
 
-<div class="card">
-<b>ROBU (Robotics Club)</b><br>
-Junior Executive – IT (2022–2024)
-</div>
+    <div class="project-card reveal">
+      <div class="project-award">🏆 2nd Runner-Up — BRACU FYP Showcase 2026</div>
+      <h3 class="project-title">4-DOF Robotic Manipulator with Soft Gripper</h3>
+      <p class="project-desc">Designed and built a pick-and-place robotic arm with a bio-inspired soft gripper. Developed a real-time computer vision pipeline on Raspberry Pi 5 using OpenCV for object detection and localization, with closed-loop control for precise, repeatable handling.</p>
+      <div class="project-tags">
+        <span class="project-tag">Raspberry Pi 5</span>
+        <span class="project-tag">OpenCV</span>
+        <span class="project-tag">Python</span>
+        <span class="project-tag">Robotics</span>
+        <span class="project-tag">Closed-loop Control</span>
+      </div>
+      <a href="https://hdl.handle.net/10361/27527" target="_blank" class="project-link">
+        View Project <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
 
-<div class="card">
-<b>BUEEC</b><br>
-Event Management Member (2022–2024)
-</div>
+    <div class="project-card reveal">
+      <div class="project-award">💰 BDT 30,000 Pre-Seed Grant — BRACU UIHP 2025</div>
+      <h3 class="project-title">BIOSE HealthTrack — IoT Smart Healthcare Monitoring</h3>
+      <p class="project-desc">Built an ESP32-based biomedical monitoring system integrating multiple sensors with real-time data acquisition and CSV logging. Designed a machine learning pipeline for early diabetic risk prediction, custom PCBs in Altium Designer, and 3D enclosures in Fusion 360.</p>
+      <div class="project-tags">
+        <span class="project-tag">ESP32</span>
+        <span class="project-tag">Altium Designer</span>
+        <span class="project-tag">Machine Learning</span>
+        <span class="project-tag">Fusion 360</span>
+        <span class="project-tag">IoT</span>
+      </div>
+    </div>
 
+    <div class="project-card reveal">
+      <h3 class="project-title">BRACU ALTER — Autonomous Underwater/Ground Vehicle</h3>
+      <p class="project-desc">Contributed to the AI & Control team — trained object-detection models with YOLOv5 and YOLOv8, built a real-time operator GUI in PyQt5 with live OpenCV video streaming, and assisted in embedded control logic for autonomous navigation and obstacle avoidance.</p>
+      <div class="project-tags">
+        <span class="project-tag">YOLOv5 / YOLOv8</span>
+        <span class="project-tag">PyQt5</span>
+        <span class="project-tag">OpenCV</span>
+        <span class="project-tag">Embedded Control</span>
+        <span class="project-tag">Computer Vision</span>
+      </div>
+    </div>
+
+  </div>
 </section>
 
-<section id="training" class="section">
-<h2>Industrial Training</h2>
+<!-- EXPERIENCE / TRAINING -->
+<section id="experience">
+  <div class="section-label reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Industrial Training & Experience</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="timeline">
 
-<div class="card">
-<b>Neural Semiconductor</b><br>
-SystemVerilog, Digital & Analog Design, RFIC, EDA Tools
-</div>
+    <div class="timeline-item reveal">
+      <div class="timeline-date">JAN 2026 · NARSINGDI, BD</div>
+      <div class="timeline-role">Industrial Training — Power Plant Operations</div>
+      <div class="timeline-org">Ghorashal Combined Cycle Power Plant, BPDP</div>
+      <ul class="timeline-bullets">
+        <li>Studied combined-cycle power plant operations covering turbines, boilers, substations, and industrial auxiliary systems.</li>
+        <li>Gained practical exposure to DCS/SCADA systems, transformers, switchgear, and protection relay coordination.</li>
+        <li>Participated in simulator-based training for real-time plant monitoring and fault response.</li>
+      </ul>
+    </div>
 
-<div class="card">
-<b>Ghorashal Power Plant (BPDB)</b><br>
-Power generation, turbines, SCADA, transformers, protection systems
-</div>
+    <div class="timeline-item reveal">
+      <div class="timeline-date">SEP – OCT 2025 · DHAKA, BD</div>
+      <div class="timeline-role">Industrial Attachment — Semiconductor Design</div>
+      <div class="timeline-org">Neural Semiconductor</div>
+      <ul class="timeline-bullets">
+        <li>Gained hands-on experience in SystemVerilog, digital design, and analog IC design fundamentals.</li>
+        <li>Explored RFIC concepts and industry-standard EDA workflows using Cadence Virtuoso tools.</li>
+      </ul>
+    </div>
 
+    <div class="timeline-item reveal">
+      <div class="timeline-date">2022 – 2024 · DHAKA, BD</div>
+      <div class="timeline-role">Junior Executive, IT Department</div>
+      <div class="timeline-org">Robotics Club of BRAC University (ROBU)</div>
+      <ul class="timeline-bullets">
+        <li>Managed digital platforms and supported technical infrastructure for club events and competitions.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-date">2022 – 2024 · DHAKA, BD</div>
+      <div class="timeline-role">Event Management Member</div>
+      <div class="timeline-org">BRAC University EEE Club (BUEEC)</div>
+      <ul class="timeline-bullets">
+        <li>Co-organised workshops, seminars, and technical competitions for the EEE student community.</li>
+      </ul>
+    </div>
+
+  </div>
 </section>
 
-<section id="skills" class="section">
-<h2>Skills</h2>
-<div class="skills">
-<span>Python</span>
-<span>C</span>
-<span>MATLAB</span>
-<span>Verilog</span>
-<span>IoT</span>
-<span>Embedded Systems</span>
-<span>Power Systems</span>
-<span>Machine Learning</span>
-<span>Computer Vision</span>
-</div>
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label reveal">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Education</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-grid">
+
+    <div class="edu-card reveal">
+      <div class="edu-year">2022 – 2026</div>
+      <div class="edu-degree">B.Sc. in Electrical & Electronic Engineering</div>
+      <div class="edu-school">BRAC University · Dhaka, Bangladesh</div>
+      <span class="edu-grade">CGPA: 3.53 / 4.00</span>
+    </div>
+
+    <div class="edu-card reveal">
+      <div class="edu-year">2020</div>
+      <div class="edu-degree">Higher Secondary Certificate (HSC)</div>
+      <div class="edu-school">Engineering University School & College · Dhaka</div>
+      <span class="edu-grade">GPA: 5.00 / 5.00</span>
+    </div>
+
+    <div class="edu-card reveal">
+      <div class="edu-year">2018</div>
+      <div class="edu-degree">Secondary School Certificate (SSC)</div>
+      <div class="edu-school">Sonargaon GR Institution · Narayanganj</div>
+      <span class="edu-grade">GPA: 5.00 / 5.00</span>
+    </div>
+
+  </div>
 </section>
 
-<section id="awards" class="section">
-<h2>Awards</h2>
+<!-- AWARDS -->
+<section id="awards">
+  <div class="section-label reveal">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Awards & Funding</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="awards-grid">
 
-<div class="card">
-UIHP Grant (BDT 30,000) – IoT Health Monitoring System (2025)
-</div>
+    <div class="award-card reveal">
+      <div class="award-icon">💰</div>
+      <div>
+        <div class="award-title">Pre-Seed Grant — BDT 30,000</div>
+        <div class="award-detail">University Innovation Hub Program, BRAC University · July 2025<br>Awarded for the IoT Health Monitoring System (BIOSE HealthTrack).</div>
+      </div>
+    </div>
 
-<div class="card">
-2nd Runner-Up – Final Year Project Showcase (2026)
-</div>
+    <div class="award-card reveal">
+      <div class="award-icon">🥉</div>
+      <div>
+        <div class="award-title">2nd Runner-Up — Final Year Design Project Showcase</div>
+        <div class="award-detail">BRAC University · January 2026<br>Recognised for the 4-DOF Robotic Manipulator with Soft Gripper.</div>
+      </div>
+    </div>
 
+  </div>
 </section>
 
-<section id="contact" class="section">
-<h2>Contact</h2>
-<p>Email: shafin.ahmed2@g.bracu.ac.bd.com</p>
+<!-- INTERESTS -->
+<section id="interests">
+  <div class="section-label reveal">
+    <span class="section-num">07</span>
+    <h2 class="section-title">Interests</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="interests-wrap">
+    <div class="interest-chip reveal">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+      Solar Energy Systems
+    </div>
+    <div class="interest-chip reveal">Renewable Energy</div>
+    <div class="interest-chip reveal">Smart Grid</div>
+    <div class="interest-chip reveal">Power Electronics</div>
+    <div class="interest-chip reveal">Energy Storage Systems</div>
+    <div class="interest-chip reveal">Industrial Automation</div>
+    <div class="interest-chip reveal">Embedded Systems</div>
+    <div class="interest-chip reveal">Manufacturing Optimization</div>
+    <div class="interest-chip reveal">Product Development</div>
+    <div class="interest-chip reveal">Consumer Electronics Design</div>
+    <div class="interest-chip reveal">Sustainable Technology</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2 class="contact-headline reveal">Let's Build Something.</h2>
+  <p class="contact-sub reveal">Open to opportunities in power systems, embedded engineering, IoT, and semiconductor design. Let's connect.</p>
+  <div class="contact-links reveal">
+    <a href="mailto:shafin.ahmed2@g.bracu.ac.bd" class="contact-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      shafin.ahmed2@g.bracu.ac.bd
+    </a>
+    <a href="tel:+8801875373617" class="contact-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      +880 1875 373617
+    </a>
+    <a href="https://linkedin.com/in/shafinahmed-bracu" target="_blank" class="contact-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://github.com/shafin2212" target="_blank" class="contact-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      GitHub
+    </a>
+  </div>
 </section>
 
 <footer>
-<p>© 2026 Shafin Ahmed</p>
+  <p>Designed & built by <span>Shafin Ahmed</span> · © 2026</p>
 </footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav active state on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--teal)' : '';
+    });
+  }, { passive: true });
+</script>
 
 </body>
 </html>
