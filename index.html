@@ -99,7 +99,67 @@
     opacity: 0.13;
   }
 
-  .hero-content { position: relative; z-index: 2; max-width: 720px; }
+  /* Hero two-col with photo */
+  .hero-inner {
+    position: relative; z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    width: 100%;
+  }
+  .hero-content { max-width: 620px; flex: 1; }
+
+  .hero-photo-wrap {
+    flex-shrink: 0;
+    position: relative;
+  }
+  .hero-photo {
+    width: 260px; height: 320px;
+    border-radius: 12px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    border: 2px solid rgba(0,212,200,0.25);
+    filter: grayscale(20%);
+    transition: filter 0.4s;
+  }
+  .hero-photo:hover { filter: grayscale(0%); }
+  .hero-photo-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border: 1px solid rgba(0,212,200,0.15);
+    border-radius: 16px;
+    pointer-events: none;
+  }
+  .hero-photo-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: -12px; right: -12px;
+    width: 100%; height: 100%;
+    border: 1px solid rgba(0,212,200,0.1);
+    border-radius: 14px;
+    z-index: -1;
+  }
+  /* photo placeholder */
+  .hero-photo-placeholder {
+    width: 260px; height: 320px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--navy3), #0a1f3a);
+    border: 2px dashed rgba(0,212,200,0.25);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 12px; color: var(--slate);
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+    text-align: center; padding: 20px;
+  }
+  .hero-photo-placeholder svg { opacity: 0.4; }
+
+  @media (max-width: 900px) {
+    .hero-inner { flex-direction: column-reverse; gap: 40px; padding-top: 100px; text-align: center; }
+    .hero-photo, .hero-photo-placeholder { width: 160px; height: 200px; }
+    .hero-cta { justify-content: center; }
+  }
 
   .hero-eyebrow {
     font-family: 'JetBrains Mono', monospace;
@@ -293,6 +353,130 @@
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 28px;
   }
+
+  /* Featured (FYDP) full-width card */
+  .project-card-featured {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+    grid-column: 1 / -1;
+  }
+  .project-card-featured::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--amber), var(--teal));
+    background-size: 200%;
+    animation: shimmer 3s linear infinite;
+  }
+  @keyframes shimmer { 0%{background-position:0%} 100%{background-position:200%} }
+  .project-card-featured:hover { border-color: rgba(0,212,200,0.45); transform: translateY(-4px); }
+
+  .featured-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  @media (max-width: 820px) { .featured-inner { grid-template-columns: 1fr; } }
+
+  .featured-image {
+    position: relative;
+    min-height: 320px;
+    background: var(--navy3);
+    overflow: hidden;
+  }
+  .featured-image img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.85;
+    transition: opacity 0.3s, transform 0.4s;
+  }
+  .project-card-featured:hover .featured-image img { opacity: 1; transform: scale(1.03); }
+  .featured-image-placeholder {
+    width: 100%; height: 100%; min-height: 320px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 12px;
+    background: linear-gradient(135deg, var(--navy3), #0a1f3a);
+    color: var(--slate);
+    font-size: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    text-align: center;
+    padding: 32px;
+  }
+  .featured-image-placeholder svg { color: var(--teal); opacity: 0.5; }
+  .featured-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent 60%, var(--card));
+    pointer-events: none;
+  }
+  @media (max-width: 820px) { .featured-image-overlay { background: linear-gradient(to bottom, transparent 60%, var(--card)); } }
+
+  .featured-body {
+    padding: 36px 32px;
+    display: flex; flex-direction: column;
+  }
+
+  .featured-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0 24px;
+  }
+  .metric-box {
+    background: rgba(0,212,200,0.06);
+    border: 1px solid rgba(0,212,200,0.15);
+    border-radius: 8px;
+    padding: 12px 10px;
+    text-align: center;
+  }
+  .metric-val {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--teal);
+    display: block;
+    line-height: 1.2;
+  }
+  .metric-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--slate);
+    letter-spacing: 0.3px;
+    margin-top: 4px;
+    display: block;
+  }
+
+  .featured-abstract {
+    font-size: 0.88rem;
+    color: var(--slate);
+    line-height: 1.75;
+    margin-bottom: 20px;
+  }
+  .featured-abstract b { color: var(--light); font-weight: 500; }
+
+  /* toggle abstract */
+  .abstract-toggle {
+    background: none; border: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--teal);
+    cursor: pointer;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    padding: 0;
+    display: flex; align-items: center; gap: 6px;
+    transition: opacity 0.2s;
+  }
+  .abstract-toggle:hover { opacity: 0.75; }
+  .abstract-full { display: none; }
+  .abstract-full.open { display: block; }
+
   .project-card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -602,6 +786,68 @@
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
   }
+
+  /* ── FYDP GALLERY ── */
+  .fydp-gallery {
+    position: relative;
+    width: 100%; height: 100%;
+    min-height: 380px;
+    display: flex; flex-direction: column;
+    background: var(--navy3);
+  }
+  .fydp-main-photo {
+    flex: 1;
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: opacity 0.3s;
+  }
+  .fydp-thumbs {
+    display: flex;
+    gap: 4px;
+    padding: 8px;
+    background: rgba(5,11,24,0.85);
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--teal2) transparent;
+  }
+  .fydp-thumbs::-webkit-scrollbar { height: 3px; }
+  .fydp-thumbs::-webkit-scrollbar-thumb { background: var(--teal2); border-radius: 2px; }
+  .fydp-thumb {
+    width: 52px; height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.5;
+    flex-shrink: 0;
+    border: 1px solid transparent;
+    transition: opacity 0.2s, border-color 0.2s;
+  }
+  .fydp-thumb:hover { opacity: 0.8; }
+  .fydp-thumb.active { opacity: 1; border-color: var(--teal); }
+  .fydp-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 12px;
+    background: rgba(5,11,24,0.9);
+  }
+  .fydp-nav button {
+    background: none; border: 1px solid var(--border);
+    color: var(--teal); font-size: 1rem;
+    width: 28px; height: 28px;
+    border-radius: 4px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .fydp-nav button:hover { background: rgba(0,212,200,0.1); }
+  .fydp-nav span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--slate);
+  }
 </style>
 </head>
 <body>
@@ -677,23 +923,34 @@
     <line class="trace t5" x1="750" y1="420" x2="750" y2="440"/>
   </svg>
 
-  <div class="hero-content">
-    <p class="hero-eyebrow">// EEE Engineer · BRAC University 2026</p>
-    <h1 class="hero-name">Shafin<br><span class="accent">Ahmed</span></h1>
-    <p class="hero-tagline">Designing the intersection of power systems, intelligent hardware, and real-world robotics — from PCB traces to machine learning pipelines.</p>
-    <div class="hero-cta">
-      <a href="#projects" class="btn-primary">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        View Projects
-      </a>
-      <a href="https://github.com/shafin2212" target="_blank" class="btn-outline">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-        GitHub
-      </a>
-      <a href="https://linkedin.com/in/shafinahmed-bracu" target="_blank" class="btn-outline">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-        LinkedIn
-      </a>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <p class="hero-eyebrow">// EEE Engineer · BRAC University 2026</p>
+      <h1 class="hero-name">Shafin<br><span class="accent">Ahmed</span></h1>
+      <p class="hero-tagline">Designing the intersection of power systems, intelligent hardware, and real-world robotics — from PCB traces to machine learning pipelines.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          View Projects
+        </a>
+        <a href="https://github.com/shafin2212" target="_blank" class="btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+        <a href="https://linkedin.com/in/shafinahmed-bracu" target="_blank" class="btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+
+    <!-- PROFILE PHOTO -->
+    <div class="hero-photo-wrap" style="opacity:0;animation:fadeUp 0.8s 1s forwards">
+      <img
+        src="https://drive.google.com/uc?export=view&id=1dW3DLv3T5J9Qqpy83pkfpr6IYXDa3x7N"
+        alt="Shafin Ahmed"
+        class="hero-photo"
+        onerror="this.outerHTML='<div class=\'hero-photo-placeholder\'><svg width=\'48\' height=\'48\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><path d=\'M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2\'/><circle cx=\'12\' cy=\'7\' r=\'4\'/></svg><span>Photo loads<br>in browser</span></div>'">
     </div>
   </div>
 
@@ -847,21 +1104,109 @@
   </div>
   <div class="projects-grid">
 
-    <div class="project-card reveal">
-      <div class="project-award">🏆 2nd Runner-Up — BRACU FYP Showcase 2026</div>
-      <h3 class="project-title">4-DOF Robotic Manipulator with Soft Gripper</h3>
-      <p class="project-desc">Designed and built a pick-and-place robotic arm with a bio-inspired soft gripper. Developed a real-time computer vision pipeline on Raspberry Pi 5 using OpenCV for object detection and localization, with closed-loop control for precise, repeatable handling.</p>
-      <div class="project-tags">
-        <span class="project-tag">Raspberry Pi 5</span>
-        <span class="project-tag">OpenCV</span>
-        <span class="project-tag">Python</span>
-        <span class="project-tag">Robotics</span>
-        <span class="project-tag">Closed-loop Control</span>
+    <!-- ══ FEATURED: FYDP ══ -->
+    <div class="project-card-featured reveal">
+      <div class="featured-inner">
+
+        <!-- LEFT: image gallery -->
+        <div class="featured-image">
+          <div class="fydp-gallery">
+            <img id="fydp-main-img"
+              src="https://drive.google.com/uc?export=view&id=1QR7DgQOne3Cc8MfP9PF8YbqF09BO0udD"
+              alt="FYDP Robotic Arm" class="fydp-main-photo"
+              onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:#8892A4;font-family:JetBrains Mono,monospace;font-size:0.75rem;text-align:center;padding:20px\'>Images load when<br>opened in browser</div>'">
+            <div class="fydp-thumbs" id="fydp-thumbs">
+              <img src="https://drive.google.com/uc?export=view&id=1QR7DgQOne3Cc8MfP9PF8YbqF09BO0udD" class="fydp-thumb active" onclick="swapImg(this)" alt="">
+              <img src="https://drive.google.com/uc?export=view&id=1OTGNtxeusZywaijldESOZa0j2_O8mU9q" class="fydp-thumb" onclick="swapImg(this)" alt="">
+              <img src="https://drive.google.com/uc?export=view&id=1pD_i7iEwn1YZ5z2TlSzl8A9S7Wh2GGaz" class="fydp-thumb" onclick="swapImg(this)" alt="">
+              <img src="https://drive.google.com/uc?export=view&id=1ohexdu0dVtqgMeOtjpUYJPFiIkjaAZep" class="fydp-thumb" onclick="swapImg(this)" alt="">
+              <img src="https://drive.google.com/uc?export=view&id=1tqWbFJ8q5DarZcqngZS_IZy0QZPV7Gk3" class="fydp-thumb" onclick="swapImg(this)" alt="">
+              <img src="https://drive.google.com/uc?export=view&id=1q-bFtVJL3gAWuHExHlWe65SFV3xyxVg4" class="fydp-thumb" onclick="swapImg(this)" alt="">
+              <img src="https://drive.google.com/uc?export=view&id=1h2SM-y_OXgAkJ98tmK2_ZYSWpjH0WkIk" class="fydp-thumb" onclick="swapImg(this)" alt="">
+              <img src="https://drive.google.com/uc?export=view&id=12V0K1nrBNawXetI6WQuu8xIaIJL9n49P" class="fydp-thumb" onclick="swapImg(this)" alt="">
+              <img src="https://drive.google.com/uc?export=view&id=14KVUvFB64MCsuklqeT62dBEhZxGkTHHD" class="fydp-thumb" onclick="swapImg(this)" alt="">
+              <img src="https://drive.google.com/uc?export=view&id=1zkF5YqJCR14EUTQXe3QfEtEp340AShkD" class="fydp-thumb" onclick="swapImg(this)" alt="">
+              <img src="https://drive.google.com/uc?export=view&id=1Ht1akHknqG6B-FR7BU_vw-tlJDwzn0E7" class="fydp-thumb" onclick="swapImg(this)" alt="">
+              <img src="https://drive.google.com/uc?export=view&id=1qnJONiGUmOgpwjSxzUUtnm1caAzpIujg" class="fydp-thumb" onclick="swapImg(this)" alt="">
+              <img src="https://drive.google.com/uc?export=view&id=1dW3DLv3T5J9Qqpy83pkfpr6IYXDa3x7N" class="fydp-thumb" onclick="swapImg(this)" alt="">
+            </div>
+            <div class="fydp-nav">
+              <button onclick="galleryStep(-1)" aria-label="Previous">&#8592;</button>
+              <span id="fydp-counter">1 / 13</span>
+              <button onclick="galleryStep(1)" aria-label="Next">&#8594;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: content -->
+        <div class="featured-body">
+          <div class="project-award">🏆 2nd Runner-Up — BRACU FYP Showcase 2026</div>
+          <h3 class="project-title" style="font-size:1.25rem">Soft Robotic Manipulation System<br><span style="color:var(--slate);font-size:0.9rem;font-weight:400">4-DoF Manipulator + Bio-Inspired Soft Gripper</span></h3>
+
+          <!-- Key metrics from abstract -->
+          <div class="featured-metrics">
+            <div class="metric-box">
+              <span class="metric-val">94.7%</span>
+              <span class="metric-lbl">YOLOv11-m Precision</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-val">0.86</span>
+              <span class="metric-lbl">mAP@0.50:0.95</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-val">0.77 m³</span>
+              <span class="metric-lbl">Reachable Volume</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-val">98.99%</span>
+              <span class="metric-lbl">Sim Positioning Accuracy</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-val">4.06s</span>
+              <span class="metric-lbl">Avg Sim Execution Time</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-val">4 Models</span>
+              <span class="metric-lbl">CV Models Evaluated</span>
+            </div>
+          </div>
+
+          <!-- Short summary always visible -->
+          <p class="featured-abstract">
+            A soft robotic manipulation system integrating a <b>4-DoF rigid manipulator</b> with a <b>bio-inspired soft gripper</b> for adaptive grasping of delicate and irregularly shaped objects. Supports both manual teleoperation and autonomous control via a <b>ROS2 + MoveIt2</b> architecture with collision-aware motion planning. Vision pipeline benchmarks four deep-learning models on an 11-class manipulation dataset — <b>YOLOv11-m</b> achieves the best balance of accuracy and speed (94.7% precision, 94.3% recall). Fabricated via 3D printing from Fusion 360 designs; kinematics validated in simulation and real-world experiments.
+          </p>
+
+          <!-- Expandable full abstract -->
+          <button class="abstract-toggle" onclick="toggleAbstract()" id="abs-btn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            READ FULL ABSTRACT
+          </button>
+          <div class="abstract-full" id="abs-full">
+            <p class="featured-abstract" style="border-left:2px solid var(--border);padding-left:16px;margin-top:0">
+              Safe manipulation of delicate and irregularly shaped objects remains a major challenge for conventional rigid robotic systems. This project presents a structured, model-based design approach beginning with theoretical <b>kinematic and dynamic analysis</b> and payload torque calculations to guide actuator selection. The manipulator and gripper are evaluated in <b>Autodesk Fusion 360</b> including static stress and motion studies, then fabricated using 3D printing. A <b>URDF-based robot description</b> in ROS2/MoveIt2 enables collision-aware motion planning, workspace analysis, and repeatable end-effector positioning. Numerical workspace sampling confirms an asymmetric reachable volume of approximately <b>0.77 m³</b> under joint and self-collision constraints. Four deep learning models — <b>YOLOv11-m, Faster R-CNN, RF-DETR, and RTMDet-m</b> — are trained on an 11-class dataset; YOLOv11-m achieves 94.7% precision, 94.3% recall, and mAP@0.50:0.95 of 0.86. In simulation, autonomous control achieves <b>98.99% mean positioning accuracy</b> (avg 4.06s) vs 70.08% for manual (avg 46.72s). Physical experiments on fragile objects show <b>33% grasp success</b> in fully autonomous mode (avg 23s) and 66% positioning accuracy under manual teleoperation (avg 51s). Results confirm feasibility while highlighting hardware/actuation limitations and clear paths for improvement in industrial automation, agriculture, and service robotics.
+            </p>
+          </div>
+
+          <div class="project-tags" style="margin-top:auto;padding-top:16px">
+            <span class="project-tag">ROS2 / MoveIt2</span>
+            <span class="project-tag">YOLOv11-m</span>
+            <span class="project-tag">Faster R-CNN</span>
+            <span class="project-tag">RF-DETR</span>
+            <span class="project-tag">Fusion 360</span>
+            <span class="project-tag">3D Printing</span>
+            <span class="project-tag">Raspberry Pi 5</span>
+            <span class="project-tag">URDF / Kinematics</span>
+            <span class="project-tag">OpenCV</span>
+            <span class="project-tag">Python</span>
+          </div>
+          <a href="https://hdl.handle.net/10361/27527" target="_blank" class="project-link" style="margin-top:20px">
+            View Publication <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+
       </div>
-      <a href="https://hdl.handle.net/10361/27527" target="_blank" class="project-link">
-        View Project <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
     </div>
+    <!-- ══ END FEATURED ══ -->
 
     <div class="project-card reveal">
       <div class="project-award">💰 BDT 30,000 Pre-Seed Grant — BRACU UIHP 2025</div>
@@ -1081,6 +1426,46 @@
       a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--teal)' : '';
     });
   }, { passive: true });
+
+  // FYDP Gallery
+  const thumbs = Array.from(document.querySelectorAll('.fydp-thumb'));
+  let currentIdx = 0;
+
+  function swapImg(el) {
+    const mainImg = document.getElementById('fydp-main-img');
+    mainImg.style.opacity = '0';
+    setTimeout(() => {
+      mainImg.src = el.src;
+      mainImg.style.opacity = '1';
+    }, 200);
+    thumbs.forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    currentIdx = thumbs.indexOf(el);
+    document.getElementById('fydp-counter').textContent = `${currentIdx + 1} / ${thumbs.length}`;
+    // scroll thumb into view
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+
+  function galleryStep(dir) {
+    currentIdx = (currentIdx + dir + thumbs.length) % thumbs.length;
+    swapImg(thumbs[currentIdx]);
+  }
+
+  // keyboard nav when hovering gallery
+  document.querySelector('.fydp-gallery')?.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') galleryStep(-1);
+    if (e.key === 'ArrowRight') galleryStep(1);
+  });
+
+  // Abstract toggle
+  function toggleAbstract() {
+    const full = document.getElementById('abs-full');
+    const btn  = document.getElementById('abs-btn');
+    const open = full.classList.toggle('open');
+    btn.innerHTML = open
+      ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg> COLLAPSE ABSTRACT'
+      : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg> READ FULL ABSTRACT';
+  }
 </script>
 
 </body>
