@@ -121,10 +121,8 @@
     object-position: center top;
     display: block;
     border: 2px solid rgba(0,212,200,0.25);
-    filter: grayscale(20%);
     transition: filter 0.4s;
   }
-  .hero-photo:hover { filter: grayscale(0%); }
   .hero-photo-wrap::before {
     content: '';
     position: absolute;
@@ -142,22 +140,10 @@
     border-radius: 14px;
     z-index: -1;
   }
-  /* photo placeholder */
-  .hero-photo-placeholder {
-    width: 260px; height: 320px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, var(--navy3), #0a1f3a);
-    border: 2px dashed rgba(0,212,200,0.25);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 12px; color: var(--slate);
-    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
-    text-align: center; padding: 20px;
-  }
-  .hero-photo-placeholder svg { opacity: 0.4; }
 
   @media (max-width: 900px) {
     .hero-inner { flex-direction: column-reverse; gap: 40px; padding-top: 100px; text-align: center; }
-    .hero-photo, .hero-photo-placeholder { width: 160px; height: 200px; }
+    .hero-photo { width: 160px; height: 200px; }
     .hero-cta { justify-content: center; }
   }
 
@@ -397,25 +383,6 @@
     transition: opacity 0.3s, transform 0.4s;
   }
   .project-card-featured:hover .featured-image img { opacity: 1; transform: scale(1.03); }
-  .featured-image-placeholder {
-    width: 100%; height: 100%; min-height: 320px;
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column; gap: 12px;
-    background: linear-gradient(135deg, var(--navy3), #0a1f3a);
-    color: var(--slate);
-    font-size: 0.8rem;
-    font-family: 'JetBrains Mono', monospace;
-    text-align: center;
-    padding: 32px;
-  }
-  .featured-image-placeholder svg { color: var(--teal); opacity: 0.5; }
-  .featured-image-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to right, transparent 60%, var(--card));
-    pointer-events: none;
-  }
-  @media (max-width: 820px) { .featured-image-overlay { background: linear-gradient(to bottom, transparent 60%, var(--card)); } }
 
   .featured-body {
     padding: 36px 32px;
@@ -610,10 +577,9 @@
     margin-top: 16px;
     display: block;
     border: 1px solid var(--border);
-    filter: grayscale(15%);
-    transition: filter 0.3s, transform 0.3s;
+    transition: transform 0.3s;
   }
-  .timeline-photo:hover { filter: grayscale(0%); transform: scale(1.01); }
+  .timeline-photo:hover { transform: scale(1.01); }
 
   /* ── EDUCATION ── */
   #education { background: var(--navy2); }
@@ -880,7 +846,6 @@
 </nav>
 
 <section id="hero">
-
   <svg class="circuit-bg" viewBox="0 0 1400 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
     <defs>
       <style>
@@ -1062,7 +1027,7 @@
       <div class="featured-inner">
         
         <div class="fydp-gallery">
-          <img id="fydp-main-img" src="project.jpg" class="fydp-main-photo" alt="FYDP Main Visual">
+          <img id="fydp-main-img" src="FYDP Project.jpeg" class="fydp-main-photo" alt="FYDP Main Visual">
           
           <div class="fydp-nav">
             <button onclick="galleryStep(-1)">◂</button>
@@ -1071,8 +1036,8 @@
           </div>
 
           <div class="fydp-thumbs">
-            <img src="project.jpg" class="fydp-thumb active" onclick="swapImg(this)" alt="Project image">
-            <img src="runnerup.jpg" class="fydp-thumb" onclick="swapImg(this)" alt="2nd Runner up award image">
+            <img src="FYDP Project.jpeg" class="fydp-thumb active" onclick="swapImg(this)" alt="Project image">
+            <img src="Receiving Award for 2nd Runner Up position in the FYDP Project showcasing.jpeg" class="fydp-thumb" onclick="swapImg(this)" alt="2nd Runner up award image">
           </div>
         </div>
 
@@ -1153,7 +1118,18 @@
         <li>Drafted single-line technical schematics covering industrial transformation systems using AutoCAD Electrical platforms under compliance frameworks.</li>
         <li>Analyzed transformer oil breakdown voltage verification testing profiles alongside field quality assurance workflows.</li>
       </ul>
-      <img src="internship.jpg" class="timeline-photo" alt="Engineering Training Activity">
+      <img src="Ghorashal Training group photo.jpg" class="timeline-photo" alt="Engineering Training Activity">
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">October 2025 — December 2025</div>
+      <div class="timeline-role">Research & Design Intern</div>
+      <div class="timeline-org">Neural Semiconductor</div>
+      <ul class="timeline-bullets">
+        <li>Assisted senior layouts teams working on low-power peripheral physical layer integrations.</li>
+        <li>Conducted structural simulation reviews checking clock network logic constraints across customized evaluation boards.</li>
+      </ul>
+      <img src="Neural semiconductor Certificate on internship completion .jpeg" class="timeline-photo" alt="Neural Semiconductor Internship Certificate">
     </div>
   </div>
 </section>
@@ -1237,7 +1213,6 @@
 </footer>
 
 <script>
-  // Simple Scroll Reveal Pipeline
   const revealElements = document.querySelectorAll('.reveal');
   const checkReveal = () => {
     revealElements.forEach(el => {
@@ -1265,7 +1240,6 @@
     el.classList.add('active');
     currentIdx = thumbs.indexOf(el);
     document.getElementById('fydp-counter').textContent = `${currentIdx + 1} / ${thumbs.length}`;
-    // scroll thumb into view
     el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
   }
 
@@ -1273,12 +1247,6 @@
     currentIdx = (currentIdx + dir + thumbs.length) % thumbs.length;
     swapImg(thumbs[currentIdx]);
   }
-
-  // keyboard nav when hovering gallery
-  document.querySelector('.fydp-gallery')?.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft') galleryStep(-1);
-    if (e.key === 'ArrowRight') galleryStep(1);
-  });
 
   // Abstract toggle
   function toggleAbstract() {
